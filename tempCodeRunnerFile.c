@@ -38,12 +38,12 @@ char grid[16][32]={"################################"
     ,"#                              #"
     ,"#                              #"
     ,"#                              #"
-    ,"#                             #"
-    ,"#                              #"
     ,"#                             Q#"
     ,"#                              #"
     ,"#                              #"
-    ,"#                             ##"
+    ,"#                              #"
+    ,"#                              #"
+    ,"#                              #"
     ,"#                              #"
     ,"#                             O#"
     ,"################################"};
@@ -71,8 +71,7 @@ int main()
             applesOnScreen++;}
             char inp;
             inp=getchar ();
-            int ch;
-            while ((ch = getchar()) != '\n' && ch != EOF);
+            fflush(stdout);
             // if(grid[head->yCor][head->xCor-1]=='Q')
             //     {
                 //         collosion();
@@ -130,33 +129,34 @@ int main()
     
             else if(grid[head->yCor-1][head->xCor]=='Q')
             {
-               
-                int X=head->xCor,Y=head->yCor;
-                int swapper;
-                node * newNode=malloc(sizeof(node));
-                newNode->next=head;
-                head->previous=newNode;
+                node * newNode= (malloc(sizeof(node)));
+                node * temp=head;
+                
+                while(temp->next!=NULL)
+                    {
+                        temp=temp->next;
+                    }
+                temp->next=newNode;
                 newNode->next=NULL;
-                // newNode=head;
-                // head=newNode->next;
-                grid[head->yCor-1][head->xCor]='O';
+    
+                while(tempo->next!=NULL)
+                    {
+                        tempo->next->xCor=tempo->xCor;
+                        tempo->next->yCor=tempo->yCor;
+                        tempo=tempo->next;// very mehnat wala part, head ka info aage push karke , head update kardia
+                    }
+                //collusion me neeche wale part ka kuch toh hoga
+                tempo->next=NULL;
+                tail=tempo;
+                //
                 head->yCor--;
                 grid[head->yCor][head->xCor]='O';
-                grid[tail->yCor][tail->xCor]=' ';
-                printf("\033[H");
-                printMatrix();
-                
+                grid[tail->yCor][tail->xCor]='o';
              }
                 
                 
-            if(grid[head->yCor][head->xCor]=='#'||grid[head->yCor-1][head->xCor]=='O')
-                {
-                    printf("\033[H");
-                    printMatrix();
-                    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nyou bit yourself asshole;");
-                    // printMatrix();
-                    break;
-                }
+            if(grid[head->yCor][head->xCor]=='#'||grid[head->yCor][head->xCor]=='O')
+                {}
             
     
             // else exit(0);
