@@ -7,8 +7,7 @@ int move();
 int printMatrix();
 int createRand(int);
 int createRandApple();
-void printsolutation();
- 
+
 
 typedef struct node {
   struct node *previous;
@@ -29,14 +28,14 @@ char grid[16][32] = {
     "#                              #",
     "#                              #",
     "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
-    "#                              #",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
+    "#                             Q#",
     "#                              #",
     "#                              #",
     "################################"};
@@ -59,41 +58,37 @@ int main() {
       createRandApple();
       applesOnScreen++;
     }
-    char inp;
+    char inp,prohibitted;
     inp = getchar();
     int ch;
     while ((ch = getchar()) != '\n' && ch != EOF); // flushing output;
+    if(prohibitted==inp){prohibitted='0';continue;}
 
     if (inp == 'w' || inp == 'W') {
        int cont=move(&applesOnScreen,-1,0);
-       if(cont==0)break;   
-      if(cont==2)continue; }
+       if(cont==0)break;   prohibitted='s'; }
 
     if (inp == 'a' || inp == 'A') {
        int cont=move(&applesOnScreen,0,-1);
-       if(cont==0)break;  
-      if(cont==2)continue;  }
+       if(cont==0)break;   prohibitted='d'; }
 
     if (inp == 's' || inp == 'S') {
        int cont=move(&applesOnScreen,1,0);
-       if(cont==0)break;  
-      if(cont==2)continue;  }
+       if(cont==0)break;  prohibitted='w';  }
 
     if (inp == 'd' || inp == 'D') {
        int cont=move(&applesOnScreen,0,1);
-       if(cont==0)break;  
-      if(cont==2)continue;  }
-    }}// these brackets were missed while upgrading(making code smaller by using functions) which cause "main not found error"
+       if(cont==0)break;  prohibitted='a';  }
+    }}// these brackets were not written while upgrading(making code smaller by using functions) which cause "main not found error"
     
 
 int createRandApple() {
   node *backup = head;
-  mark1:
   int x = createRand(30);
-  int y = createRand(14);
+  int y = createRandY(14);
   int valid;
-  if(x!=31&&x!=0&&y!=0&&y!=15)
-  {
+  mark1:
+  
     valid = 1;
     while (backup->next != NULL) 
     {
@@ -104,8 +99,7 @@ int createRandApple() {
         valid = 0;
         break;
     }
-  }
-  else valid=0;
+  
   
   if (valid == 1) 
   
@@ -117,14 +111,14 @@ int createRandApple() {
   }
 }
 
-int createRand(int num) {
+int createRand(int To)
+ {
   srand(time(NULL)); // srand is basically feeding a seed value to the pseudo
   // random function rand() on the basis of time
   int random = rand();
-  random = (random % num) + 1;
+  random = (random % To) + 1;
   return random;
 }
-
 
 int printMatrix() {
 
@@ -134,26 +128,21 @@ int printMatrix() {
     }
     printf("\n");
   }
-  printf("****your current score=%d*****",len);
 }
 
 int move(int* applesOnScreen,int updationY,int updationX)
 {
-     if ((head->yCor+updationY)==(head->next->yCor)&& (head->xCor+updationX)==(head->next->xCor))
-     {
-      return 2;
-     } 
      if (grid[head->yCor+updationY][head->xCor+updationX] == '#' ||
             grid[head->yCor+updationY][head->xCor+updationX] == 'O') {
           printf("\033[H");
           printMatrix();
-          printsolutation();
           return 0;
         }
         node *tempo = head;
         
         int backupHeadyCor = head->yCor;
         int backupHeadxCor = head->xCor;
+        // printf("'%c'-next", grid[(head->yCor )][head->xCor]);
       if (grid[head->yCor +updationY][head->xCor+updationX] == ' ') {
         int X = head->xCor;
         int Y = head->yCor;
@@ -173,6 +162,7 @@ int move(int* applesOnScreen,int updationY,int updationX)
 
           tempo = tempo->next;
         }
+        // collusion me neeche wale part ka kuch toh hoga
         head->yCor = backupHeadyCor;
         head->xCor = backupHeadxCor;
         node *temp = head;
@@ -182,6 +172,7 @@ int move(int* applesOnScreen,int updationY,int updationX)
         tempo->next = NULL;
         tail = tempo;
 
+        //
         head->yCor+=+updationY;
         head->xCor+=+updationX;
         grid[head->yCor][head->xCor] = 'O';
@@ -193,7 +184,8 @@ int move(int* applesOnScreen,int updationY,int updationX)
       }
 
       else if (grid[head->yCor +updationY][head->xCor+updationX] == 'Q') {
-        *applesOnScreen=0;len++;
+        *applesOnScreen=0;
+
         int X = head->xCor, Y = head->yCor;
         int swapper;
         node *newNode = malloc(sizeof(node));
@@ -203,9 +195,14 @@ int move(int* applesOnScreen,int updationY,int updationX)
         newNode->xCor = head->xCor;
         newNode->yCor = head->yCor;
         head = newNode;
+
+        // newNode=head;
+        // head=newNode->next;
         grid[head->yCor +updationY][head->xCor+updationX] = 'O';
+          
         head->yCor+=+updationY;
         head->xCor+=+updationX;
+        
         grid[head->yCor][head->xCor] = 'O';
         grid[tail->yCor][tail->xCor] = ' ';
         printf("\033[H");
@@ -213,35 +210,13 @@ int move(int* applesOnScreen,int updationY,int updationX)
       }
 }
 
-void printsolutation()
-{
-printf("\n\n\n"
-"  ____       _     __    __ __________ \n"
-" / ___|     / \\    | \\  / | |  ______|\n"
-"| |  _     / _ \\   | |\\/| | | |_____\n"
-"| |_| |   / ___ \\  | |  | | | | ____| \n"
-" \\____|  /_/   \\_\\ |_|  |_| |________| \n"  
-"\n"
-"  ____   __      __ ______  __ ___ \n"
-" / __ \\  \\ \\    / /|  ____| |  __ \\\n"
-"| |  | |  \\ \\  / / | |__    | |__) |\n"
-"| |  | |   \\ \\/ /  |  __|   |  _  / \n"
-"| |__| |    \\  /   | |____  | | \\ \\ \n"
-" \\____/      \\/    |______| |_|  \\_\\\n"
-);
-}
+
 
 /* 
 1.generating snake and apple without adding into the default grid
-done
 2. apple generation shouldnt be on border and on the snake  
-done
 3. no reverse self collission
-done
 4. (ops)graphical terminal protocol - kitty
-dicey
 5. remove randx and randy func
-done
-
 */
 //
