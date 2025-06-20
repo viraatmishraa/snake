@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "header_file": "c"
     },
     "editor.defaultFormatter": "xaver.clang-format"
 }
