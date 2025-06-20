@@ -82,7 +82,8 @@ char grid[16][32] = {
       tail->yCor = 14;
       tail->previous = head;
       head->next = tail;
-      
+      printf("\n\n************press w to start************");
+      fflush(stdout);
       while (1) {
         
         if (applesOnScreen == 0) {
@@ -129,7 +130,7 @@ int createRandApple() {
     valid = 1;
     while (backup->next != NULL) 
     {
-      if (backup->xCor != x && backup->yCor != y) 
+      if (!(backup->xCor == x && backup->yCor == y)) 
         backup = backup->next;
 
       else
@@ -147,6 +148,10 @@ int createRandApple() {
     backup = head;
     goto mark1;
   }
+  if(!(len==1)){
+  printf("\033[H");
+  printMatrix();}
+
 }
 
 int createRand(int num) {
@@ -162,7 +167,7 @@ int printMatrix() {
 
   for (int i = 0; i < 16; i++) {
     for (int j = 0; j < 32; j++) {
-      printf("%c", grid[i][j]);
+      printf("%c ", grid[i][j]);
     }
     printf("\n");
   }
@@ -261,6 +266,7 @@ printf("\n\n\n"
 "| |__| |    \\  /   | |____  | | \\ \\ \n"
 " \\____/      \\/    |______| |_|  \\_\\\n"
 );
+disableRawMode();
 }
 
 /* 
