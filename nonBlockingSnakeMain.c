@@ -131,11 +131,11 @@ int createRandApple() {
     while (backup->next != NULL) 
     {
       if (!(backup->xCor == x && backup->yCor == y)) 
-        backup = backup->next;
-
-      else
+       {backup = backup->next;
+        continue;}
+      else{
         valid = 0;
-        break;
+        break;}
     }
   }
   else valid=0;
@@ -171,7 +171,7 @@ int printMatrix() {
     }
     printf("\n");
   }
-  printf("****your current score=%d*****",len);
+  printf("                 ****your current score=%d*****",len);
 }
 
 int move(int* applesOnScreen,int updationY,int updationX)
