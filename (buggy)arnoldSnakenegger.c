@@ -73,9 +73,9 @@ int main()
 
         (head->xCor)--;
 
-        if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
+        // if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
        { grid[head->yCor][head->xCor]='O';
-         grid[tail->yCor][tail->xCor]=' ';
+         grid[tail->yCor][tail->xCor]='O';
         printf("\033[H");  // Move cursor to top-left (don't clear screen)
         printMatrix();
         printf("w,%d,%d,'%c'",head->yCor,head->xCor,grid[head->yCor][head->xCor]);}
@@ -88,9 +88,9 @@ int main()
         tail->yCor=tail->previous->yCor;
 
         head->xCor++;
-        if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
+        // if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
        { grid[head->yCor][head->xCor]='O';
-        grid[tail->yCor][tail->xCor]=' ';
+        grid[tail->yCor][tail->xCor]='O';
 
         printf("\033[H");  // Move cursor to top-left (don't clear screen)
         printMatrix();
@@ -106,9 +106,9 @@ int main()
         tail->yCor=tail->previous->yCor;
 
         head->yCor--;
-        if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
+        // if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
         {grid[head->yCor][head->xCor]='O';
-        grid[tail->yCor][tail->xCor]=' ';
+        grid[tail->yCor][tail->xCor]='O';
         
         printf("\033[H");  // Move cursor to top-left (don't clear screen)
         printMatrix();
@@ -123,9 +123,9 @@ int main()
         tail->yCor=tail->previous->yCor;
 
         head->yCor++;
-        if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
+        // if(grid[head->yCor][head->xCor]!='#'&&grid[head->yCor][head->xCor]!='O')
         {
-         grid[tail->yCor][tail->xCor]=' ';
+         grid[tail->yCor][tail->xCor]='O';
             
             grid[head->yCor][head->xCor]='O';
         printf("\033[H");  // Move cursor to top-left (don't clear screen)

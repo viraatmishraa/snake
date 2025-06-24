@@ -14,7 +14,7 @@ void printsolutation();
 char function();
 //
 
-
+int n=0;
 struct termios orig_termios;
   void disableRawMode() {
   tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
@@ -47,7 +47,7 @@ typedef struct node {
 // globally cant be declared as, function calls aint allowed here
 //  node * head = malloc(sizeof(node));
 //  node * tail = malloc(sizeof(node));
-int len = 1;
+int len = 1,mode_flag=0;
 node *head = NULL;
 node *tail = NULL; // declared globally so accessible everywhere
 
@@ -67,10 +67,9 @@ char grid[16][32] = {
     "#                              #",
     "#                              #",
     "#                              #",
-    "################################"};
+    "################################"},first_c,inp;
     
     int main() {
-      
       int applesOnScreen = 0;
       head = malloc(sizeof(node)); // initiallized in main
       tail = malloc(sizeof(node));
@@ -82,21 +81,28 @@ char grid[16][32] = {
       tail->yCor = 14;
       tail->previous = head;
       head->next = tail;
-      printf("\n\n************press w to start************");
+      printf("\n\n*******press w to start: normal mode *********");
+      printf("\n\n*******press a to start: speedrun mode *******");
+      
       fflush(stdout);
+      //
       while (1) {
+        mode_flag++;
         
         if (applesOnScreen == 0) {
           createRandApple();
           applesOnScreen++;
         }
-        //
         enableRawMode();
-    char inp=function();
+        inp=function();
+        if(mode_flag==1)
+        first_c=inp;
+        
     //
     // int ch;
     // while ((ch = getchar()) != '\n' && ch != EOF); // flushing output;
-
+        // if(len==1)
+        // {first_c=inp;}
     if (inp == 'w' || inp == 'W') {
        int cont=move(&applesOnScreen,-1,0);
        if(cont==0)break;   
@@ -155,10 +161,25 @@ int createRandApple() {
 }
 
 int createRand(int num) {
-  srand(time(NULL)); // srand is basically feeding a seed value to the pseudo
-  // random function rand() on the basis of time
-  int random = rand();
-  random = (random % num) + 1;
+ int random; 
+  if(first_c=='w')
+ {
+  srand(time(NULL));
+
+   random = rand();
+  random = (random % num) + 1;}// srand is basically feeding a seed value to the pseudo
+  // // random function rand() on the basis of time
+  else if(first_c=='a'){
+    n++;
+    srand(len+n);}
+  //   ///this line makes this version of snake , speedrunable, as its predictable with exactlty same pattern everytime 
+    
+    
+     random = rand();
+    random = (random % num) + 1;
+  
+  
+  
   return random;
 }
 
@@ -295,3 +316,5 @@ But the compiler doesn't know that ch = c is meant to be grouped together as a s
 }
 
 }
+
+

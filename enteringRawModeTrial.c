@@ -33,7 +33,7 @@ tcsetattr() — to set new settings
 
 termios struct — to modify flags like ECHO*/
         struct termios raw=orig_termios;
-                raw.c_lflag &= ~(ECHO | ICANON);//comment line 46,47 for this to work
+                raw.c_lflag &= ~(ECHO | ICANON);//comment line 50-58 for this to work
 /*
 struct termios {
     tcflag_t c_iflag;     // Input modes
