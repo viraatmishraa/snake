@@ -94,7 +94,11 @@ char grid[16][32] = {
           applesOnScreen++;
         }
         enableRawMode();
-        inp=function();
+        
+
+        
+
+
         if(mode_flag==1)
         first_c=inp;
         
@@ -305,16 +309,5 @@ done
 */
 //
 
-char function()
-{ char ch,c;
-        while(read(STDIN_FILENO,&c,1)==1/*mod 1*/&&c!='q'&&(ch=c)/*read below*/)
-/*In C, the && (logical AND) operator has lower precedence than the assignment operator =.
-
-But the compiler doesn't know that ch = c is meant to be grouped together as a single expression unless you tell it explicitly.*/
-{
-    return ch;
-}
-
-}
 
 
